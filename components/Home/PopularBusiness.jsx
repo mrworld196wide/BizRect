@@ -1,31 +1,30 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 import { db } from "../../configs/FirebaseConfig";
-import CategoryItem from "./CategoryItem";
+import PopularBusinessCard from "./PopularBusinessCard";
 
-export default function Category() {
-  const [categoryList, setCategoryList] = useState([]);
+export default function PopularBusiness() {
+  const [businessList, setBusinessList] = useState([]);
   useEffect(() => {
-    getCategoryList();
+    GetBusinessList();
   }, []);
-  const getCategoryList = async () => {
-    setCategoryList([]);
-    const q = query(collection(db, "Category"));
+  const GetBusinessList = async () => {
+    setBusinessList([]);
+    const q = query(collection(db, "BusinessList"), limit(10));
     const querySnapshot = await getDocs(q);
-
     querySnapshot.forEach((doc) => {
-      // logging data to console
-      // console.log(doc.data());
-      setCategoryList((prev) => [...prev, doc.data()]);
+      // logging data from business List
+      //   console.log(doc.data());
+      setBusinessList((prev) => [...prev, doc.data()]);
     });
   };
   return (
     <View>
       <View
         style={{
-          padding: 10,
+          padding: 15,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -38,23 +37,18 @@ export default function Category() {
             fontFamily: "outfit-bold",
           }}
         >
-          Category
+          Popular Business
         </Text>
         <Text style={{ color: Colors.PRIMARY, fontFamily: "outfit-medium" }}>
           View All
         </Text>
       </View>
       <FlatList
-        data={categoryList}
-        showsHorizontalScrollIndicator={false}
         horizontal={true}
-        style={{ marginLeft: 20 }}
+        showsHorizontalScrollIndicator={false}
+        data={businessList}
         renderItem={({ item, index }) => (
-          <CategoryItem
-            category={item}
-            key={index}
-            onCategoryPress={(category) => console.log(category)}
-          />
+          <PopularBusinessCard key={index} business={item} />
         )}
       />
     </View>

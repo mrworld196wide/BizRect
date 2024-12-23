@@ -11,7 +11,7 @@ export default function TabLayout() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={24} color={color} />
+            <Ionicons name="home" size={22} color={color} />
           ),
         }}
       />
@@ -20,7 +20,7 @@ export default function TabLayout() {
         options={{
           tabBarLabel: "Explore",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="search" size={24} color={color} />
+            <Ionicons name="search" size={22} color={color} />
           ),
         }}
       />
@@ -29,7 +29,7 @@ export default function TabLayout() {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="people" size={24} color={color} />
+            <Ionicons name="people" size={22} color={color} />
           ),
         }}
       />
